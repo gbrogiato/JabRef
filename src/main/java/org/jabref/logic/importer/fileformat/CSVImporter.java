@@ -51,40 +51,64 @@ public class CSVImporter extends Importer {
         return true;
     }
 
-    //Parser do CSV
+    //Parse CSV
     @Override
     public ParserResult importDatabase(BufferedReader reader) throws IOException {
         Objects.requireNonNull(reader);
 
         StringTokenizer st;
-        String line;
+        String line, teste;
         List<BibEntry> entries = new LinkedList<>();
 
-        //Roda o loop enquanto ouver linhas para serem lidas no arquivo CSV.
-        while ((line = reader.readLine()) != null) {
 
-            //Seleciona como um Tipo artigo
-            BibEntry bib = new BibEntry("article");
+		teste = reader.readLine();
 
-            //Faz a separação das colunas por virgula
-            st = new StringTokenizer(line, ",");
+		if (teste.equals("article")) {
+			while ((line = reader.readLine()) != null) {
 
-            bib.setField(FieldName.AUTHOR, st.nextToken());
-            bib.setField(FieldName.TITLE, st.nextToken());
-			bib.setField(FieldName.JOURNAL, st.nextToken());
-            bib.setField(FieldName.YEAR, st.nextToken());
-            bib.setField(FieldName.KEYWORDS, st.nextToken());
-            bib.setField(FieldName.ISSN, st.nextToken());
-            bib.setField(FieldName.NOTE, st.nextToken());
+				//set type as book
+				BibEntry bib = new BibEntry("article");
 
-            //add to the results
-            entries.add(bib);
-        }
+				//split the read line by commas
+				st = new StringTokenizer(line, ",");
 
+				bib.setField(FieldName.AUTHOR, st.nextToken());
+				bib.setField(FieldName.TITLE, st.nextToken());
+				bib.setField(FieldName.JOURNAL, st.nextToken());
+				bib.setField(FieldName.YEAR, st.nextToken());
+				bib.setField(FieldName.KEYWORDS, st.nextToken());
+				bib.setField(FieldName.ISSN, st.nextToken());
+				bib.setField(FieldName.NOTE, st.nextToken());
+
+				//add to the results
+				entries.add(bib);
+			}
+		} else {
+			while ((line = reader.readLine()) != null) {
+
+				//set type as book
+				BibEntry bib = new BibEntry("book");
+
+				//split the read line by commas
+				st = new StringTokenizer(line, ",");
+
+				bib.setField(FieldName.AUTHOR, st.nextToken());
+				bib.setField(FieldName.TITLE, st.nextToken());
+				bib.setField(FieldName.YEAR, st.nextToken());
+				bib.setField(FieldName.PUBLISHER, st.nextToken());
+				bib.setField(FieldName.SERIES, st.nextToken());
+				bib.setField(FieldName.KEYWORDS, st.nextToken());
+				bib.setField(FieldName.ISBN, st.nextToken());
+				bib.setField(FieldName.NOTE, st.nextToken());
+
+				//add to the results
+				entries.add(bib);
+			}
+		}
+	
         //add to database
         return new ParserResult(entries);
 
     }
-
-
+    
 }
