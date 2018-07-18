@@ -14,6 +14,7 @@ import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.FieldName;
 import org.jabref.model.util.FileUpdateMonitor;
 
+//Cria uma nova importação CSV extendendo a classe Importer do Jabref
 public class CSVImporter extends Importer {
 
     private final ImportFormatPreferences importFormatPreferences;
