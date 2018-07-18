@@ -78,16 +78,13 @@ public class CSVImporter extends Importer {
 				bib.setField(FieldName.TITLE, st.nextToken());
 				bib.setField(FieldName.JOURNAL, st.nextToken());
 				bib.setField(FieldName.YEAR, st.nextToken());
-				bib.setField(FieldName.KEYWORDS, st.nextToken());
-				bib.setField(FieldName.ISSN, st.nextToken());
-				bib.setField(FieldName.NOTE, st.nextToken());
 
 				//Adiciona a nova entrada com os dados obtidos anteriormente
 				entries.add(bib);
 			}
 
 			//Se for do tipo livro, insere na estrutura para livro
-		} else {
+		} else if (teste.equals("book")){
 			while ((line = reader.readLine()) != null) {
 
                 //Seleciona o tipo como livro
@@ -101,15 +98,30 @@ public class CSVImporter extends Importer {
 				bib.setField(FieldName.TITLE, st.nextToken());
 				bib.setField(FieldName.YEAR, st.nextToken());
 				bib.setField(FieldName.PUBLISHER, st.nextToken());
-				bib.setField(FieldName.SERIES, st.nextToken());
-				bib.setField(FieldName.KEYWORDS, st.nextToken());
-				bib.setField(FieldName.ISBN, st.nextToken());
-				bib.setField(FieldName.NOTE, st.nextToken());
+				bib.setField(FieldName.EDITOR, st.nextToken());
 
                 //Adiciona a nova entrada com os dados obtidos anteriormente
 				entries.add(bib);
 			}
-		}
+		} else {
+            while ((line = reader.readLine()) != null) {
+
+                //Seleciona o tipo como livro
+                BibEntry bib = new BibEntry("manual");
+
+                //Especifica que a separação das informações é feita por virgula
+                st = new StringTokenizer(line, ",");
+
+                //Passa as informações para as estruturas do programa, separadas pelo token virgula
+                bib.setField(FieldName.TITLE, st.nextToken());
+                bib.setField(FieldName.AUTHOR, st.nextToken());
+                bib.setField(FieldName.YEAR, st.nextToken());
+
+                //Adiciona a nova entrada com os dados obtidos anteriormente
+                entries.add(bib);
+            }
+        }
+
 	
         //Adiciona as informações na base de dados
         return new ParserResult(entries);
