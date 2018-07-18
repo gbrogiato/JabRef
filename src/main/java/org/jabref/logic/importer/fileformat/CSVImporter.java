@@ -24,6 +24,7 @@ public class CSVImporter extends Importer {
         this.fileMonitor = fileMonitor;
     }
 
+    //Define os nomes, tipos, id e descrição para a importação do CSV.
     @Override
     public String getName() {
         return "CSV";
@@ -33,7 +34,6 @@ public class CSVImporter extends Importer {
     public FileType getFileType() {
         return FileType.CSV;
     }
-
 
     @Override
     public String getId() {
@@ -51,7 +51,7 @@ public class CSVImporter extends Importer {
         return true;
     }
 
-    //Parse CSV
+    //Função para sobrescrever o Parser para a leitura do CSV. Lê do arquivo e realiza a importação para o jabref.
     @Override
     public ParserResult importDatabase(BufferedReader reader) throws IOException {
         Objects.requireNonNull(reader);
@@ -60,18 +60,20 @@ public class CSVImporter extends Importer {
         String line, teste;
         List<BibEntry> entries = new LinkedList<>();
 
-
+        //Variável teste para verificação de tipo de dado.
 		teste = reader.readLine();
 
+		//Se o tipo for artigo, insere na estrutura para artigo
 		if (teste.equals("article")) {
 			while ((line = reader.readLine()) != null) {
 
-				//set type as book
+				//Seleciona o tipo como artigo
 				BibEntry bib = new BibEntry("article");
 
-				//split the read line by commas
+				//Especifica que a separação das informações é feita por virgula
 				st = new StringTokenizer(line, ",");
 
+                //Passa as informações para as estruturas do programa, separadas pelo token virgula
 				bib.setField(FieldName.AUTHOR, st.nextToken());
 				bib.setField(FieldName.TITLE, st.nextToken());
 				bib.setField(FieldName.JOURNAL, st.nextToken());
@@ -80,18 +82,21 @@ public class CSVImporter extends Importer {
 				bib.setField(FieldName.ISSN, st.nextToken());
 				bib.setField(FieldName.NOTE, st.nextToken());
 
-				//add to the results
+				//Adiciona a nova entrada com os dados obtidos anteriormente
 				entries.add(bib);
 			}
+
+			//Se for do tipo livro, insere na estrutura para livro
 		} else {
 			while ((line = reader.readLine()) != null) {
 
-				//set type as book
+                //Seleciona o tipo como livro
 				BibEntry bib = new BibEntry("book");
 
-				//split the read line by commas
+                //Especifica que a separação das informações é feita por virgula
 				st = new StringTokenizer(line, ",");
 
+                //Passa as informações para as estruturas do programa, separadas pelo token virgula
 				bib.setField(FieldName.AUTHOR, st.nextToken());
 				bib.setField(FieldName.TITLE, st.nextToken());
 				bib.setField(FieldName.YEAR, st.nextToken());
@@ -101,14 +106,12 @@ public class CSVImporter extends Importer {
 				bib.setField(FieldName.ISBN, st.nextToken());
 				bib.setField(FieldName.NOTE, st.nextToken());
 
-				//add to the results
+                //Adiciona a nova entrada com os dados obtidos anteriormente
 				entries.add(bib);
 			}
 		}
 	
-        //add to database
+        //Adiciona as informações na base de dados
         return new ParserResult(entries);
-
     }
-    
 }
