@@ -1,0 +1,26 @@
+2018.06.07 11:11:15 INFO  ce[][o.s.p.ProcessEntryPoint] Starting ce
+2018.06.07 11:11:15 INFO  ce[][o.s.ce.app.CeServer] Compute Engine starting up...
+2018.06.07 11:11:16 INFO  ce[][o.e.p.PluginsService] no modules loaded
+2018.06.07 11:11:16 INFO  ce[][o.e.p.PluginsService] loaded plugin [org.elasticsearch.index.reindex.ReindexPlugin]
+2018.06.07 11:11:16 INFO  ce[][o.e.p.PluginsService] loaded plugin [org.elasticsearch.join.ParentJoinPlugin]
+2018.06.07 11:11:16 INFO  ce[][o.e.p.PluginsService] loaded plugin [org.elasticsearch.percolator.PercolatorPlugin]
+2018.06.07 11:11:16 INFO  ce[][o.e.p.PluginsService] loaded plugin [org.elasticsearch.transport.Netty4Plugin]
+2018.06.07 11:11:17 INFO  ce[][o.s.s.e.EsClientProvider] Connected to local Elasticsearch: [127.0.0.1:9001]
+2018.06.07 11:11:17 INFO  ce[][o.sonar.db.Database] Create JDBC data source for jdbc:h2:tcp://127.0.0.1:9092/sonar
+2018.06.07 11:11:17 WARN  ce[][o.s.d.DatabaseChecker] H2 database should be used for evaluation purpose only
+2018.06.07 11:11:18 INFO  ce[][o.s.s.p.ServerFileSystemImpl] SonarQube home: /Users/giovannibrogiato/Desktop/sonarqube-6.7.3
+2018.06.07 11:11:18 INFO  ce[][o.s.c.c.CePluginRepository] Load plugins
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarPython [python]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarC# [csharp]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarJava [java]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarQube :: Plugins :: SCM :: Git [scmgit]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin Flex [flex]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarXML [xml]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarPHP [php]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarTS [typescript]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarQube :: Plugins :: SCM :: SVN [scmsvn]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.c.CePluginRepository] Loaded plugin SonarJS [javascript]
+2018.06.07 11:11:19 INFO  ce[][o.s.c.q.PurgeCeActivities] Delete the Compute Engine tasks created before Sat Dec 09 11:11:19 BRST 2017
+2018.06.07 11:11:19 INFO  ce[][o.s.ce.app.CeServer] Compute Engine is operational
+2018.06.07 12:38:28 INFO  ce[AWPa5ijYp7qLzKv7mWr4][o.s.c.t.CeWorkerImpl] Execute task | project=org.jabref:JabRef | type=REPORT | id=AWPa5ijYp7qLzKv7mWr4
+2018.06.07 12:39:04 INFO  ce[AWPa5ijYp7qLzKv7mWr4][o.s.c.t.CeWorkerImpl] Executed task | project=org.jabref:JabRef | type=REPORT | id=AWPa5ijYp7qLzKv7mWr4 | time=36182ms

@@ -1,4 +1,4 @@
-// Generated from C:\Users\leona\IdeaProjects\JabRef\src\main\antlr4\org\jabref\search\Search.g4 by ANTLR 4.7.1
+// Generated from /Users/giovannibrogiato/IdeaProjects/JabRef4.2-Grupo4/src/main/antlr4/org/jabref/search/Search.g4 by ANTLR 4.7.1
 package org.jabref.search;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;

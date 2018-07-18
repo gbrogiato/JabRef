@@ -20,7 +20,8 @@ public class BibtexKeyChecker implements Checker {
         Optional<String> author = entry.getField(FieldName.AUTHOR);
         Optional<String> title = entry.getField(FieldName.TITLE);
         Optional<String> year = entry.getField(FieldName.YEAR);
-        if (!author.isPresent() || !title.isPresent() || !year.isPresent()) {
+        Optional<String> key = entry.getField(FieldName.KEY);
+        if (!author.isPresent() || !title.isPresent() || !year.isPresent() || !key.isPresent()) {
             return Collections.emptyList();
         }
 
@@ -28,6 +29,17 @@ public class BibtexKeyChecker implements Checker {
             String authorTitleYear = entry.getAuthorTitleYear(100);
             return Collections.singletonList(new IntegrityMessage(
                     Localization.lang("empty BibTeX key") + ": " + authorTitleYear, entry, BibEntry.KEY_FIELD));
+        }
+
+        //Checks if the Bibtexkey informed is valid
+        String[] author_words = author.get().split(" ");
+        String lastname = author_words[author_words.length-1];
+        String first_title_word = title.get().split(" ")[0];
+
+        String bibkeypattern = lastname + year.get() + first_title_word.toUpperCase();
+        if(!key.get().equals(bibkeypattern)) {
+            return Collections.singletonList(new IntegrityMessage(
+                    Localization.lang("invalid BibTeX key: expected "+bibkeypattern), entry, BibEntry.KEY_FIELD));
         }
 
         return Collections.emptyList();
