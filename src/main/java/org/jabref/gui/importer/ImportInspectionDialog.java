@@ -788,7 +788,7 @@ public class ImportInspectionDialog extends JabRefDialog implements ImportInspec
 
                     BasePanel newpanel = new BasePanel(frame, new BibDatabaseContext(defaults));
 
-                    frame.addTab(bibDB,true);
+                    frame.addTab(newpanel,true);
 
                     for (BibEntry ent : selected) {
                         newpanel.getDatabase().insertEntry(ent);
