@@ -90,6 +90,8 @@ import org.jabref.logic.util.UpdateField;
 import org.jabref.model.Defaults;
 import org.jabref.model.FieldChange;
 import org.jabref.model.database.BibDatabase;
+import org.jabref.model.database.BibDatabaseMode;
+import org.jabref.model.database.BibDatabaseModeDetection;
 import org.jabref.model.database.BibDatabaseContext;
 import org.jabref.model.entry.AuthorList;
 import org.jabref.model.entry.BibEntry;
@@ -713,6 +715,8 @@ public class ImportInspectionDialog extends JabRefDialog implements ImportInspec
         @Override
         public void actionPerformed(ActionEvent event) {
 
+            int answer = JOptionPane.NO_OPTION;
+            boolean alreadyAdded = false;
             // First check if we are supposed to warn about duplicates. If so,
             // see if there
             // are unresolved duplicates, and warn if yes.
@@ -734,7 +738,7 @@ public class ImportInspectionDialog extends JabRefDialog implements ImportInspec
                                 Localization
                                         .lang("There are possible duplicates (marked with an icon) that haven't been resolved. Continue?"),
                                 Localization.lang("Disable this confirmation dialog"), false);
-                        int answer = JOptionPane.showConfirmDialog(ImportInspectionDialog.this, cbm,
+                        answer = JOptionPane.showConfirmDialog(ImportInspectionDialog.this, cbm,
                                 Localization.lang("Duplicates found"), JOptionPane.YES_NO_OPTION);
                         if (cbm.isSelected()) {
                             Globals.prefs.putBoolean(JabRefPreferences.WARN_ABOUT_DUPLICATES_IN_INSPECTION, false);
@@ -766,12 +770,40 @@ public class ImportInspectionDialog extends JabRefDialog implements ImportInspec
 
             final List<BibEntry> selected = getSelectedEntries();
 
-            if (!selected.isEmpty()) {
+            if (answer == JOptionPane.YES_OPTION)
+            {
+                CheckBoxMessage cbm2 = new CheckBoxMessage(
+                        Localization.lang("Choose 'Yes' to import the duplicates in the current database or 'No' to create a new one with the duplicated keys. "),
+                        Localization.lang("Disable this confirmation dialog"), false);
+                answer = JOptionPane.showConfirmDialog(ImportInspectionDialog.this, cbm2,
+                        Localization.lang("Duplicates management"), JOptionPane.YES_NO_OPTION);
+
+                if (cbm2.isSelected()) {
+                    Globals.prefs.putBoolean(JabRefPreferences.WARN_ABOUT_DUPLICATES_IN_INSPECTION, false);
+                }
+                if (answer == JOptionPane.NO_OPTION) {
+                    Defaults defaults = new Defaults(Globals.prefs.getDefaultBibDatabaseMode());
+
+                    BibDatabaseContext bibDB = new BibDatabaseContext(defaults);
+
+                    BasePanel newpanel = new BasePanel(frame, new BibDatabaseContext(defaults));
+
+                    frame.addTab(bibDB,true);
+
+                    for (BibEntry ent : selected) {
+                        newpanel.getDatabase().insertEntry(ent);
+                    }
+                    alreadyAdded = true;
+                }
+            }
+
+            if (!selected.isEmpty() && !alreadyAdded) {
                 addSelectedEntries(ce, selected);
             }
 
             dispose();
             SwingUtilities.invokeLater(() -> updateGUI(selected.size()));
+            return;
         }
 
         private void updateGUI(int entryCount) {
@@ -1131,6 +1163,7 @@ public class ImportInspectionDialog extends JabRefDialog implements ImportInspec
                         }
                     } else if (diag.getSelected() == DuplicateResolverResult.KEEP_BOTH) {
                         // Do nothing.
+                        JOptionPane.showMessageDialog(null, "entrei!", "IMPORTANTE!" , JOptionPane.INFORMATION_MESSAGE);
                         entries.getReadWriteLock().writeLock().lock();
                         try {
                             first.setGroupHit(false);
